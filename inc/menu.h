@@ -3,9 +3,11 @@
 
 #define ON_OFF 0
 #define PID    1
-
 #define TERMINAL       0
 #define POTENTIOMETER  1
+#define ENTER  10
+#define WIDTH 65
+#define HEIGHT 20
 
 void menu_init();
 void menu_close();

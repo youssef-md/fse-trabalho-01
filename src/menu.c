@@ -10,10 +10,13 @@ void menu_close() {
 }
 
 WINDOW * menu_get_ui(int size) {
-    int yMax, xMax;
-    getmaxyx(stdscr, yMax, xMax);
+    int max_height, max_width;
+    int _startx, _starty;
+    getmaxyx(stdscr, max_height, max_width);
+    _starty = (LINES - max_height) / 2;   
+    _startx = (COLS - max_width) / 2; 
 
-    WINDOW * menuwin = newwin(size, xMax-12, yMax-8, 5);
+    WINDOW * menuwin = newwin(HEIGHT, WIDTH, _starty, _startx);
     box(menuwin, 0, 0);
     refresh();
     wrefresh(menuwin);
@@ -54,7 +57,7 @@ int menu_handler(WINDOW * menuwin, char * choices[], int size) {
             default:
                 break;
         }
-        if(choice == 10)
+        if(choice == ENTER)
             return highlight;
     }
 }
@@ -73,7 +76,7 @@ int menu_strategy() {
 
 int menu_open() {
     char* options[] = {"Estratégia de controle", "Temperatura de referência", "Histerese", "kp", "ki", "kd"};
-    return menu("O que deseja alterar?", options, 6);
+    return menu("O que deseja atualizar?", options, 6);
 }
 
 void menu_show_tmp(float ti, float te, float tr) {
@@ -87,13 +90,13 @@ void menu_show_tmp(float ti, float te, float tr) {
 }
 
 int menu_control_strategy() {
-    char* options[2] = {"On/Off", "PID"};
-    return menu("Qual estratégia de controle deseja usar?", options, 2);
+    char* options[2] = {"ON/OFF", "PID"};
+    return menu("Como deseja fazer o controle?", options, 2);
 }
 
 int menu_reference_source() {
     char* options[2] = {"Terminal", "Potenciômetro"};
-    return menu("A temperatura de referência deve ser inserida via terminal ou potenciômetro?", options, 2);
+    return menu("Como deseja inserir a TR?", options, 2);
 }
 
 float menu_get_float(char * msg) {
